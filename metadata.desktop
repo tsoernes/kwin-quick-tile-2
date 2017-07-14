@@ -1,6 +1,6 @@
 [Desktop Entry]
-Name=Quick Tiling - Windows 10
-Comment=Allows quick tiling support like the newly introduced 2x2 Snap feature in Windows 10. Using the Upwards and Downwards shortcuts, it allows for creation of a 2x2 grid.
+Name=Quick Tile 2
+Comment=Allows quick tiling support like the 2x2 Snap feature in Windows 10. Original author Koen Hausmans (koen@hausmans.nl)
 Icon=preferences-system-windows-script-test
 
 Type=Service
@@ -8,13 +8,13 @@ Type=Service
 X-Plasma-API=javascript
 X-Plasma-MainScript=code/main.js
 
-X-KDE-PluginInfo-Author=Koen Hausmans
-X-KDE-PluginInfo-Email=koen@hausmans.nl
-X-KDE-PluginInfo-Name=quick-tiling-windows-10
-X-KDE-PluginInfo-Version=0.1.10
+X-KDE-PluginInfo-Author=Torstein Soernes
+X-KDE-PluginInfo-Email=t.soernes@gmail.com
+X-KDE-PluginInfo-Name=quick-tile-2
+X-KDE-PluginInfo-Version=0.1.0
 
 X-KDE-PluginInfo-Depends=
 X-KDE-PluginInfo-License=GPL
 X-KDE-ServiceTypes=KWin/Script
-X-KDE-PluginKeyword=quick-tiling-windows-10
+X-KDE-PluginKeyword=quick-tile-2
 
