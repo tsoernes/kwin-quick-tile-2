@@ -5,4 +5,4 @@ plasmapkg2 --type kwinscript -i quick-tile-2-v*.kwinscript
 qdbus org.kde.KWin /KWin reconfigure
 mkdir -p ~/.local/share/kservices5
 cp ~/.local/share/kwin/scripts/quick-tile-2/metadata.desktop ~/.local/share/kservices5/kwin-script-quick-tile-2.desktop
-kwin --replace &
+kwin_x11 --replace >/dev/null 2>&1 &
