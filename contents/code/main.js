@@ -4,7 +4,9 @@
  * This script will add four additional shortcuts to the KWin window manager,
  * in order to emulate Windows 10 tiling behavior.
  *
- * Original author Koen Hausmans <koen@hausmans.nl>
+ * Forked from Quick Tiling - Windows 10 by Koen Hausmans <koen@hausmans.nl>
+ *
+ * https://github.com/tsoernes/kwin-quick-tile-2
  ******************************************************************************/
 
 function _GetScreenGeometry() {
@@ -215,9 +217,6 @@ var QuickTileRight = function() {
     }
 }
 
-// Not working:
-// d . T > B
-// u . B > T
 
 var shortcutPrefix = "Quick Tile 2 "
 registerShortcut(shortcutPrefix + "Up", shortcutPrefix + "Up", "Meta+Up", QuickTileUp)
