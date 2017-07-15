@@ -1,6 +1,6 @@
 [Desktop Entry]
 Name=Quick Tile 2
-Comment=Allows quick tiling support like the 2x2 Snap feature in Windows 10. Original author Koen Hausmans (koen@hausmans.nl)
+Comment=Allows quick tiling support like the 2x2 Snap feature in Windows 10, but also allows windows to occupy top or bottom half of the screen. Forked from Quick Tiling - Windows 10 by Koen Hausmans (koen@hausmans.nl)
 Icon=preferences-system-windows-script-test
 
 Type=Service
