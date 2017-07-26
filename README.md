@@ -1,6 +1,8 @@
 This KWin Script extends the quick tiling functionality in KDE. It adds two shortcuts which behave similar to the 2x2 Snap feature introduced in Windows 10, 
 with an addition that allows to tile windows to the top half or the bottom half of the screen.
 
+Tested and compatible with multi-monitor setups.
+
 ## Installation
 
 Execute in the source folder the following command:
@@ -8,6 +10,7 @@ Execute in the source folder the following command:
 ```
 sh install.sh
 ```
+Then open Kwin Scripts from the start menu and enable Quick Tile 2.
 
 Default keys are <Meta + Arrow> as in Windows 10, where the Meta key is often called the Super key or Windows key.
 If the keys are already bound, you need to set them in "Global Shortcuts". The shortcuts are prefixed "Quick Tile 2".
