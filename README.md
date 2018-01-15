@@ -12,13 +12,13 @@ sh install.sh
 ```
 Then open `KWin Scripts` from the start menu and enable Quick Tile 2.
 
-Default keys are <Meta + Arrow> as in Windows 10, where the Meta key is often called the Super key or Windows key.
-If the keys are already bound, you need to set them in "Global Shortcuts". The shortcuts are prefixed "Quick Tile 2".
-They are usually to be found in the KWin shortcut tab, but on some systems they end on in the System Settings tab.
+Default keys are <Meta + Arrow> as in Windows 10, where the Meta key is also known as the Super key or Windows key.
+If the keys are already bound, you need to set them in "Global Shortcuts" from the start menu. The shortcuts are prefixed "Quick Tile 2".
+They are usually to be found in the KWin shortcut tab, but on some systems they end up in the System Settings tab.
 
-## Manual install and Packaging
+## Manual installation and packaging
 
-Should something go wrong with the above script, you can try to manually package and install it
+Should something go wrong with the above script, you can try to manually package and install it.
 To package this kwin-script into a .kwinscript archive, execute:
 
 ```
@@ -31,6 +31,3 @@ plasmapkg2 --type kwinscript -i quick-tile-2-v*.kwinscript
 ```
 Alternatively, open "KWin scripts" from the start menu and then "Import KWin script ..."
 Afterwards, you might need to log in and out.
-
-
-Forked from Quick Tiling - Windows 10 by Koen Hausmans (koen@hausmans.nl)
