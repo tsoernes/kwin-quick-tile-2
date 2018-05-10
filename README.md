@@ -3,10 +3,16 @@ which in addition allows tiling windows to the top or the bottom half of the scr
 
 Tested and compatible with multi-monitor setups.
 
+!(https://i.imgur.com/dmE9add.png)
 ## Installation
 
-Execute in the source folder the following command:
+Clone the repo
+```
+git clone https://github.com/tsoernes/kwin-quick-tile-2.git && cd kwin-quick-tile-2
+```
+or [download the zip](https://github.com/tsoernes/kwin-quick-tile-2/releases), extract it, and `cd` into the `kwin-quick-tile-2` folder.
 
+Execute the following command in the source folder:
 ```
 sh install.sh
 ```
