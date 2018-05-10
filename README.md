@@ -3,7 +3,7 @@ which in addition allows tiling windows to the top or the bottom half of the scr
 
 Tested and compatible with multi-monitor setups.
 
-!(https://i.imgur.com/dmE9add.png)
+![](https://i.imgur.com/dmE9add.png)
 ## Installation
 
 Clone the repo
