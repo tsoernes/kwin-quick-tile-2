@@ -6,18 +6,20 @@ Tested and compatible with multi-monitor setups.
 ![](https://i.imgur.com/dmE9add.png)
 ## Installation
 
-Clone the repo
+1. Clone the repo
 ```
 git clone https://github.com/tsoernes/kwin-quick-tile-2.git && cd kwin-quick-tile-2
 ```
-or [download the zip](https://github.com/tsoernes/kwin-quick-tile-2/releases), extract it, and `cd` into the `kwin-quick-tile-2` folder.
+_or_ [download the zip](https://github.com/tsoernes/kwin-quick-tile-2/releases) and extract it.
 
-Execute the following command in the source folder:
+2. `cd` into the `kwin-quick-tile-2` folder.
+
+3. Execute the following command in the `kwin-quick-tile-2` folder:
 ```
 sh install.sh
 ```
-Then open `KWin Scripts` from the start menu and enable Quick Tile 2.
-
+4. Open `KWin Scripts` from the start menu and enable Quick Tile 2.
+## How to use
 Default keys are <Meta + Arrow>, for example <Meta + Up>, as in Windows 10, where the Meta key is also known as the Super key or Windows key.
 If the keys are already bound, you need to set them in "Global Shortcuts" from the start menu. The shortcuts are prefixed "Quick Tile 2".
 They are usually to be found in the KWin shortcut tab, but on some systems they end up in the System Settings tab.
