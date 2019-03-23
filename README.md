@@ -3,7 +3,7 @@ and in addition allows tiling windows to the top or the bottom half of the scree
 
 Tested and compatible with multi-monitor setups.
 
-![](https://i.imgur.com/dmE9add.png)
+![](demo.gif)
 ## Installation
 
 Clone the repo
