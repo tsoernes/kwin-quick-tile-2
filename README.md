@@ -3,7 +3,7 @@ and in addition allows tiling windows to the top or the bottom half of the scree
 
 Tested and compatible with multi-monitor setups.
 
-Quick Tile 2 is available on the [openDesktop KDE store](https://www.opendesktop.org/p/1259484/).
+Quick Tile 2 is available on the [openDesktop KDE store](https://www.opendesktop.org/p/1259484/), othwerwise you can follow the installation instructions below.
 
 ![](demo.gif)
 ## Installation
