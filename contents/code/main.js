@@ -98,7 +98,7 @@ function _IsTiledRight() {
 function _IsTiledToQuadrant() {
     var screenGeometry = _GetScreenGeometry()
     var clientGeometry = _GetClientGeometryOnScreen()
-    if (clientGeometry.width === (screenGeometry.width / 2) && clientGeometry.height === (screenGeometry.height/ 2)) {
+    if (clientGeometry.width === (screenGeometry.width / 2) && clientGeometry.height === (screenGeometry.height / 2)) {
         return true
     }
     return false
@@ -167,7 +167,7 @@ var QuickTileDown = function() {
         workspace.slotWindowQuickTileBottom()
         workspace.slotWindowQuickTileBottom()
     } else {
-        workspace.slotWindowMinimize()
+        workspace.slotWindowQuickTileBottom()
     }
 }
 
