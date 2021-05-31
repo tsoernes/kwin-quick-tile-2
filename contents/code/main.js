@@ -139,8 +139,7 @@ var QuickTileUp = function() {
     // M > T
     // this is probaly no good for multi-monitor
     } else if (_IsMaximized()) {
-        workspace.slotWindowQuickTileTop()
-        workspace.slotWindowQuickTileTop()
+        workspace.slotWindowMaximize()
     } else {
         workspace.slotWindowMaximize()
     }
@@ -164,8 +163,7 @@ var QuickTileDown = function() {
         workspace.slotWindowQuickTileRight()
     // M > B
     } else if (_IsMaximized()) {
-        workspace.slotWindowQuickTileBottom()
-        workspace.slotWindowQuickTileBottom()
+        workspace.slotWindowMaximize()
     } else {
         workspace.slotWindowMinimize()
     }
@@ -186,7 +184,6 @@ var QuickTileLeft = function() {
         workspace.slotWindowQuickTileBottom()
     // M > L
     } else if (_IsMaximized()) {
-        workspace.slotWindowQuickTileLeft()
         workspace.slotWindowQuickTileLeft()
     // R > L, BL > L, TL > L
     } else {
@@ -209,7 +206,6 @@ var QuickTileRight = function() {
         workspace.slotWindowQuickTileBottom()
     // M > R
     } else if (_IsMaximized()) {
-        workspace.slotWindowQuickTileRight()
         workspace.slotWindowQuickTileRight()
     // L > R, BR > R, TR > R
     } else {
