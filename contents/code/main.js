@@ -14,16 +14,16 @@ function _GetScreenGeometry() {
 }
 
 function _GetClientGeometryOnScreen() {
-    var clientGeometry = workspace.activeClient.geometry
-    var screenGeometry = _GetScreenGeometry()
-    clientGeometry.x -= screenGeometry.x
-    clientGeometry.y -= screenGeometry.y
-    return clientGeometry
+    const clientGeometry = workspace.activeClient.geometry
+    const screenGeometry = _GetScreenGeometry()
+    const x = clientGeometry.x - screenGeometry.x
+    const y = clientGeometry.y - screenGeometry.y
+    return {x: x, y: y, width: clientGeometry.width, height: clientGeometry.height}
 }
 
 function _IsVerticallyMaximized() {
-    var screenGeometry = _GetScreenGeometry()
-    var clientGeometry = _GetClientGeometryOnScreen()
+    const screenGeometry = _GetScreenGeometry()
+    const clientGeometry = _GetClientGeometryOnScreen()
     if (clientGeometry.height === screenGeometry.height) {
         return true
     }
@@ -31,8 +31,8 @@ function _IsVerticallyMaximized() {
 }
 
 function _IsHorizontallyMaximized() {
-    var screenGeometry = _GetScreenGeometry()
-    var clientGeometry = _GetClientGeometryOnScreen()
+    const screenGeometry = _GetScreenGeometry()
+    const clientGeometry = _GetClientGeometryOnScreen()
     if (clientGeometry.width === screenGeometry.width) {
         return true
     }
@@ -44,8 +44,8 @@ function _IsMaximized() {
 }
 
 function _IsTiledToTop() {
-    var screenGeometry = _GetScreenGeometry()
-    var clientGeometry = _GetClientGeometryOnScreen()
+    const screenGeometry = _GetScreenGeometry()
+    const clientGeometry = _GetClientGeometryOnScreen()
     if (clientGeometry.height === (screenGeometry.height / 2) && clientGeometry.y === 0) {
         return true
     }
@@ -57,8 +57,8 @@ function _IsTiledTop() {
 }
 
 function _IsTiledToBottom() {
-    var screenGeometry = _GetScreenGeometry()
-    var clientGeometry = _GetClientGeometryOnScreen()
+    const screenGeometry = _GetScreenGeometry()
+    const clientGeometry = _GetClientGeometryOnScreen()
     if (clientGeometry.height === (screenGeometry.height / 2) && clientGeometry.y === (screenGeometry.height / 2)) {
         return true
     }
@@ -70,8 +70,8 @@ function _IsTiledBottom() {
 }
 
 function _IsTiledToLeft() {
-    var screenGeometry = _GetScreenGeometry()
-    var clientGeometry = _GetClientGeometryOnScreen()
+    const screenGeometry = _GetScreenGeometry()
+    const clientGeometry = _GetClientGeometryOnScreen()
     if (clientGeometry.width === (screenGeometry.width / 2) && clientGeometry.x === 0) {
         return true
     }
@@ -83,8 +83,8 @@ function _IsTiledLeft() {
 }
 
 function _IsTiledToRight() {
-    var screenGeometry = _GetScreenGeometry()
-    var clientGeometry = _GetClientGeometryOnScreen()
+    const screenGeometry = _GetScreenGeometry()
+    const clientGeometry = _GetClientGeometryOnScreen()
     if (clientGeometry.width === (screenGeometry.width / 2) && clientGeometry.x === (screenGeometry.width / 2)) {
         return true
     }
@@ -96,8 +96,8 @@ function _IsTiledRight() {
 }
 
 function _IsTiledToQuadrant() {
-    var screenGeometry = _GetScreenGeometry()
-    var clientGeometry = _GetClientGeometryOnScreen()
+    const screenGeometry = _GetScreenGeometry()
+    const clientGeometry = _GetClientGeometryOnScreen()
     if (clientGeometry.width === (screenGeometry.width / 2) && clientGeometry.height === (screenGeometry.height/ 2)) {
         return true
     }
