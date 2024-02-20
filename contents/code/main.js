@@ -12,14 +12,14 @@
 function _GetScreenGeometry() {
   const screenGeometry = workspace.clientArea(
     KWin.PlacementArea,
-    workspace.activeClient.screen,
-    workspace.Desktop
+    workspace.activeScreen,
+    workspace.currentDesktop
   );
   return screenGeometry;
 }
 
 function _GetClientGeometryOnScreen() {
-  const clientGeometry = workspace.activeClient.geometry;
+  const clientGeometry = workspace.activeWindow.frameGeometry;
   const screenGeometry = _GetScreenGeometry();
   const x = clientGeometry.x - screenGeometry.x;
   const y = clientGeometry.y - screenGeometry.y;
