@@ -32,12 +32,12 @@ Should something go wrong with the above script, you can try to manually package
 To package this kwin-script into a .kwinscript archive, execute:
 
 ```
-zip -r quick-tile-2-v$(cat metadata.desktop | grep X-KDE-PluginInfo-Version= | awk -F'=' '{print $2}').kwinscript *
+zip -r quick-tile-2-v$(cat metadata.json | jq -r .KPlugin.Version).kwinscript *
 ```
 
 To install the archive, execute:
 ```
-plasmapkg2 --type kwinscript -i quick-tile-2-v*.kwinscript
+kpackagetool6 --type=KWin/Script -i .
 ```
 Alternatively, open "KWin scripts" from the start menu and then "Import KWin script ..."
 Afterwards, you might need to log in and out.
