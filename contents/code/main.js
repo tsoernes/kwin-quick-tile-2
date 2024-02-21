@@ -9,32 +9,15 @@
  * https://github.com/tsoernes/kwin-quick-tile-2
  ******************************************************************************/
 
-function _GetScreenGeometry() {
-  const screenGeometry = workspace.clientArea(
-    KWin.PlacementArea,
-    workspace.activeScreen,
-    workspace.currentDesktop
-  );
-  return screenGeometry;
-}
-
-function _GetClientGeometryOnScreen() {
-  const clientGeometry = workspace.activeWindow.frameGeometry;
-  const screenGeometry = _GetScreenGeometry();
-  const x = clientGeometry.x - screenGeometry.x;
-  const y = clientGeometry.y - screenGeometry.y;
-  return {
-    x: x,
-    y: y,
-    width: clientGeometry.width,
-    height: clientGeometry.height,
-  };
-}
-
 function _tileEvaluator() {
   return {
-    screenGeometry: _GetScreenGeometry(),
-    clientGeometry: _GetClientGeometryOnScreen(),
+    screenGeometry: workspace.clientArea(
+      KWin.PlacementArea,
+      workspace.activeScreen,
+      workspace.currentDesktop
+    ),
+    clientGeometry: workspace.activeWindow.frameGeometry,
+    tileGeometry: workspace.activeWindow.tile?.relativeGeometry,
 
     isVerticallyMaximized() {
       return (this.clientGeometry.height === this.screenGeometry.height);
@@ -46,54 +29,61 @@ function _tileEvaluator() {
       return this.isHorizontallyMaximized() && this.isVerticallyMaximized();
     },
 
-    isTiledToTop() {
-      return (
-        this.clientGeometry.height === this.screenGeometry.height / 2 &&
-        this.clientGeometry.y === 0
-      );
-    },
-    isTiledToBottom() {
-      return (
-        this.clientGeometry.height === this.screenGeometry.height / 2 &&
-        this.clientGeometry.y === this.screenGeometry.height / 2
-      );
-    },
-    isTiledToLeft() {
-      return (
-        this.clientGeometry.width === this.screenGeometry.width / 2 &&
-        this.clientGeometry.x === 0
-      );
-    },
-    isTiledToRight() {
-      return (
-        this.clientGeometry.width === this.screenGeometry.width / 2 &&
-        this.clientGeometry.x === this.screenGeometry.width / 2
-      );
-    },
-
     isTiledTop() {
-      return this.isTiledToTop() && this.isHorizontallyMaximized();
+      return this.tileGeometry != null &&
+        this.tileGeometry.x === 0 &&
+        this.tileGeometry.y === 0 &&
+        this.tileGeometry.width === 1 &&
+        this.tileGeometry.height === 0.5;
     },
     isTiledBottom() {
-      return this.isTiledToBottom() && this.isHorizontallyMaximized();
+      return this.tileGeometry != null &&
+        this.tileGeometry.x === 0 &&
+        this.tileGeometry.y === 0.5 &&
+        this.tileGeometry.width === 1 &&
+        this.tileGeometry.height === 0.5;
     },
     isTiledLeft() {
-      return this.isTiledToLeft() && this.isVerticallyMaximized();
+      return this.tileGeometry != null &&
+        this.tileGeometry.x === 0 &&
+        this.tileGeometry.y === 0 &&
+        this.tileGeometry.width === 0.5 &&
+        this.tileGeometry.height === 1;
     },
     isTiledRight() {
-      return this.isTiledToRight() && this.isVerticallyMaximized();
+      return this.tileGeometry != null &&
+        this.tileGeometry.x === 0.5 &&
+        this.tileGeometry.y === 0 &&
+        this.tileGeometry.width === 0.5 &&
+        this.tileGeometry.height === 1;
     },
     isTiledTopLeft() {
-      return this.isTiledToTop() && this.isTiledToLeft();
+      return this.tileGeometry != null &&
+        this.tileGeometry.x === 0 &&
+        this.tileGeometry.y === 0 &&
+        this.tileGeometry.width === 0.5 &&
+        this.tileGeometry.height === 0.5;
     },
     isTiledTopRight() {
-      return this.isTiledToTop() && this.isTiledToRight();
+      return this.tileGeometry != null &&
+        this.tileGeometry.x === 0.5 &&
+        this.tileGeometry.y === 0 &&
+        this.tileGeometry.width === 0.5 &&
+        this.tileGeometry.height === 0.5;
     },
     isTiledBottomLeft() {
-      return this.isTiledToBottom() && this.isTiledToLeft();
+      return this.tileGeometry != null &&
+        this.tileGeometry.x === 0 &&
+        this.tileGeometry.y === 0.5 &&
+        this.tileGeometry.width === 0.5 &&
+        this.tileGeometry.height === 0.5;
     },
     isTiledBottomRight() {
-      return this.isTiledToBottom() && this.isTiledToRight();
+      return this.tileGeometry != null &&
+        this.tileGeometry.x === 0.5 &&
+        this.tileGeometry.y === 0.5 &&
+        this.tileGeometry.width === 0.5 &&
+        this.tileGeometry.height === 0.5;
     },
   }
 }
