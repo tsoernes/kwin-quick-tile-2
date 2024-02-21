@@ -31,139 +31,94 @@ function _GetClientGeometryOnScreen() {
   };
 }
 
-function _IsVerticallyMaximized() {
-  const screenGeometry = _GetScreenGeometry();
-  const clientGeometry = _GetClientGeometryOnScreen();
-  if (clientGeometry.height === screenGeometry.height) {
-    return true;
+function _tileEvaluator() {
+  return {
+    screenGeometry: _GetScreenGeometry(),
+    clientGeometry: _GetClientGeometryOnScreen(),
+
+    isVerticallyMaximized() {
+      return (this.clientGeometry.height === this.screenGeometry.height);
+    },
+    isHorizontallyMaximized() {
+      return (this.clientGeometry.height === this.screenGeometry.height);
+    },
+    isMaximized() {
+      return this.isHorizontallyMaximized() && this.isVerticallyMaximized();
+    },
+
+    isTiledToTop() {
+      return (
+        this.clientGeometry.height === this.screenGeometry.height / 2 &&
+        this.clientGeometry.y === 0
+      );
+    },
+    isTiledToBottom() {
+      return (
+        this.clientGeometry.height === this.screenGeometry.height / 2 &&
+        this.clientGeometry.y === this.screenGeometry.height / 2
+      );
+    },
+    isTiledToLeft() {
+      return (
+        this.clientGeometry.width === this.screenGeometry.width / 2 &&
+        this.clientGeometry.x === 0
+      );
+    },
+    isTiledToRight() {
+      return (
+        this.clientGeometry.width === this.screenGeometry.width / 2 &&
+        this.clientGeometry.x === this.screenGeometry.width / 2
+      );
+    },
+
+    isTiledTop() {
+      return this.isTiledToTop() && this.isHorizontallyMaximized();
+    },
+    isTiledBottom() {
+      return this.isTiledToBottom() && this.isHorizontallyMaximized();
+    },
+    isTiledLeft() {
+      return this.isTiledToLeft() && this.isVerticallyMaximized();
+    },
+    isTiledRight() {
+      return this.isTiledToRight() && this.isVerticallyMaximized();
+    },
+    isTiledTopLeft() {
+      return this.isTiledToTop() && this.isTiledToLeft();
+    },
+    isTiledTopRight() {
+      return this.isTiledToTop() && this.isTiledToRight();
+    },
+    isTiledBottomLeft() {
+      return this.isTiledToBottom() && this.isTiledToLeft();
+    },
+    isTiledBottomRight() {
+      return this.isTiledToBottom() && this.isTiledToRight();
+    },
   }
-  return false;
-}
-
-function _IsHorizontallyMaximized() {
-  const screenGeometry = _GetScreenGeometry();
-  const clientGeometry = _GetClientGeometryOnScreen();
-  if (clientGeometry.width === screenGeometry.width) {
-    return true;
-  }
-  return false;
-}
-
-function _IsMaximized() {
-  return _IsHorizontallyMaximized() && _IsVerticallyMaximized();
-}
-
-function _IsTiledToTop() {
-  const screenGeometry = _GetScreenGeometry();
-  const clientGeometry = _GetClientGeometryOnScreen();
-  if (
-    clientGeometry.height === screenGeometry.height / 2 &&
-    clientGeometry.y === 0
-  ) {
-    return true;
-  }
-  return false;
-}
-
-function _IsTiledTop() {
-  return _IsTiledToTop() && _IsHorizontallyMaximized();
-}
-
-function _IsTiledToBottom() {
-  const screenGeometry = _GetScreenGeometry();
-  const clientGeometry = _GetClientGeometryOnScreen();
-  if (
-    clientGeometry.height === screenGeometry.height / 2 &&
-    clientGeometry.y === screenGeometry.height / 2
-  ) {
-    return true;
-  }
-  return false;
-}
-
-function _IsTiledBottom() {
-  return _IsTiledToBottom() && _IsHorizontallyMaximized();
-}
-
-function _IsTiledToLeft() {
-  const screenGeometry = _GetScreenGeometry();
-  const clientGeometry = _GetClientGeometryOnScreen();
-  if (
-    clientGeometry.width === screenGeometry.width / 2 &&
-    clientGeometry.x === 0
-  ) {
-    return true;
-  }
-  return false;
-}
-
-function _IsTiledLeft() {
-  return _IsTiledToLeft() && _IsVerticallyMaximized();
-}
-
-function _IsTiledToRight() {
-  const screenGeometry = _GetScreenGeometry();
-  const clientGeometry = _GetClientGeometryOnScreen();
-  if (
-    clientGeometry.width === screenGeometry.width / 2 &&
-    clientGeometry.x === screenGeometry.width / 2
-  ) {
-    return true;
-  }
-  return false;
-}
-
-function _IsTiledRight() {
-  return _IsTiledToRight() && _IsVerticallyMaximized();
-}
-
-function _IsTiledToQuadrant() {
-  const screenGeometry = _GetScreenGeometry();
-  const clientGeometry = _GetClientGeometryOnScreen();
-  if (
-    clientGeometry.width === screenGeometry.width / 2 &&
-    clientGeometry.height === screenGeometry.height / 2
-  ) {
-    return true;
-  }
-  return false;
-}
-
-function _IsTiledTopLeft() {
-  return _IsTiledToTop() && _IsTiledToLeft();
-}
-
-function _IsTiledTopRight() {
-  return _IsTiledToTop() && _IsTiledToRight();
-}
-
-function _IsTiledBottomLeft() {
-  return _IsTiledToBottom() && _IsTiledToLeft();
-}
-
-function _IsTiledBottomRight() {
-  return _IsTiledToBottom() && _IsTiledToRight();
 }
 
 var QuickTileUp = function () {
+  const tileEvaluator = _tileEvaluator();
+
   // L > TL
-  if (_IsTiledLeft()) {
+  if (tileEvaluator.isTiledLeft()) {
     workspace.slotWindowQuickTileTopLeft();
     // R > TR
-  } else if (_IsTiledRight()) {
+  } else if (tileEvaluator.isTiledRight()) {
     workspace.slotWindowQuickTileTopRight();
     // B > T
-  } else if (_IsTiledBottom()) {
+  } else if (tileEvaluator.isTiledBottom()) {
     workspace.slotWindowQuickTileTop();
     // BL > L
-  } else if (_IsTiledBottomLeft()) {
+  } else if (tileEvaluator.isTiledBottomLeft()) {
     workspace.slotWindowQuickTileLeft();
     // BR > R
-  } else if (_IsTiledBottomRight()) {
+  } else if (tileEvaluator.isTiledBottomRight()) {
     workspace.slotWindowQuickTileRight();
     // M > T
     // this is probaly no good for multi-monitor
-  } else if (_IsMaximized()) {
+  } else if (tileEvaluator.isMaximized()) {
     workspace.slotWindowMaximize();
   } else {
     workspace.slotWindowMaximize();
@@ -171,23 +126,25 @@ var QuickTileUp = function () {
 };
 
 var QuickTileDown = function () {
+  const tileEvaluator = _tileEvaluator();
+
   // L > BL
-  if (_IsTiledLeft()) {
+  if (tileEvaluator.isTiledLeft()) {
     workspace.slotWindowQuickTileBottomLeft();
     // R > BR
-  } else if (_IsTiledRight()) {
+  } else if (tileEvaluator.isTiledRight()) {
     workspace.slotWindowQuickTileBottomRight();
     // T > B
-  } else if (_IsTiledTop()) {
+  } else if (tileEvaluator.isTiledTop()) {
     workspace.slotWindowQuickTileBottom();
     // TL > L
-  } else if (_IsTiledTopLeft()) {
+  } else if (tileEvaluator.isTiledTopLeft()) {
     workspace.slotWindowQuickTileLeft();
     // TR > R
-  } else if (_IsTiledTopRight()) {
+  } else if (tileEvaluator.isTiledTopRight()) {
     workspace.slotWindowQuickTileRight();
     // M > B
-  } else if (_IsMaximized()) {
+  } else if (tileEvaluator.isMaximized()) {
     workspace.slotWindowMaximize();
   } else {
     workspace.slotWindowMinimize();
@@ -195,20 +152,22 @@ var QuickTileDown = function () {
 };
 
 var QuickTileLeft = function () {
+  const tileEvaluator = _tileEvaluator();
+
   // T > TL
-  if (_IsTiledTop()) {
+  if (tileEvaluator.isTiledTop()) {
     workspace.slotWindowQuickTileTopLeft();
     // B > BL
-  } else if (_IsTiledBottom()) {
+  } else if (tileEvaluator.isTiledBottom()) {
     workspace.slotWindowQuickTileBottomLeft();
     // TR > T
-  } else if (_IsTiledTopRight()) {
+  } else if (tileEvaluator.isTiledTopRight()) {
     workspace.slotWindowQuickTileTop();
     // BR > B
-  } else if (_IsTiledBottomRight()) {
+  } else if (tileEvaluator.isTiledBottomRight()) {
     workspace.slotWindowQuickTileBottom();
     // M > L
-  } else if (_IsMaximized()) {
+  } else if (tileEvaluator.isMaximized()) {
     workspace.slotWindowQuickTileLeft();
     // R > L, BL > L, TL > L
   } else {
@@ -217,20 +176,22 @@ var QuickTileLeft = function () {
 };
 
 var QuickTileRight = function () {
+  const tileEvaluator = _tileEvaluator();
+
   // T > TR
-  if (_IsTiledTop()) {
+  if (tileEvaluator.isTiledTop()) {
     workspace.slotWindowQuickTileTopRight();
     // B > BR
-  } else if (_IsTiledBottom()) {
+  } else if (tileEvaluator.isTiledBottom()) {
     workspace.slotWindowQuickTileBottomRight();
     // TL > T
-  } else if (_IsTiledTopLeft()) {
+  } else if (tileEvaluator.isTiledTopLeft()) {
     workspace.slotWindowQuickTileTop();
     // BL > B
-  } else if (_IsTiledBottomLeft()) {
+  } else if (tileEvaluator.isTiledBottomLeft()) {
     workspace.slotWindowQuickTileBottom();
     // M > R
-  } else if (_IsMaximized()) {
+  } else if (tileEvaluator.isMaximized()) {
     workspace.slotWindowQuickTileRight();
     // L > R, BR > R, TR > R
   } else {
