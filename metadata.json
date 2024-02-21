@@ -1,19 +1,26 @@
 {
     "KPlugin": {
-        "Authors": [
-            {
-                "Email": "t.soernes@gmail.com",
-                "Name": "Torstein Soernes"
-            }
-        ],
-        "EnabledByDefault": true,
         "Id": "com.github.tsoernes.kwin-quick-tile-2",
-        "License": "GPLv3",
+
         "Name": "Quick Tile 2",
         "Description": "Allows quick tiling support like the 2x2 Snap feature in Windows 10, but also allows windows to occupy top or bottom half of the screen.",
-        "Icon": "references-system-windows-script-test",
         "Version": "0.3.0",
-        "Website": "https://github.com/tsoernes/kwin-quick-tile-2/"
+        "Website": "https://github.com/tsoernes/kwin-quick-tile-2/",
+        
+        "Icon": "references-system-windows-script-test",
+        "License": "GPLv3",
+
+        "Authors": [
+            {
+                "Name": "Torstein Soernes",
+                "Email": "t.soernes@gmail.com"
+            },
+            {
+                "Name": "Andreas Schneider",
+                "Email": "aksdb@gmx.de"
+            }
+        ],
+        "EnabledByDefault": true
     },
     "X-Plasma-API": "javascript",
     "X-Plasma-MainScript": "code/main.js",
