@@ -17,27 +17,28 @@ _or_ [download the zip](https://github.com/tsoernes/kwin-quick-tile-2/releases) 
 2. `cd` into the `kwin-quick-tile-2` folder.
 
 3. Execute the following command in the `kwin-quick-tile-2` folder:
-```
-sh install.sh
-```
+    ```
+    make install
+    ```
+    
+    If the extension was already installed before, use the following instead:
+    ```
+    make update
+    ```
+
 4. Open `KWin Scripts` from the start menu and enable Quick Tile 2.
+
 ## How to use
 Default keys are <Meta + Arrow>, for example <Meta + Up>, as in Windows 10, where the Meta key is also known as the Super key or Windows key.
 If the keys are already bound, you need to set them in "Global Shortcuts" from the start menu. The shortcuts are prefixed "Quick Tile 2".
 They are usually to be found in the KWin shortcut tab, but on some systems they end up in the System Settings tab.
 
-## Manual installation and packaging
+## Packaging
 
-Should something go wrong with the above script, you can try to manually package and install it.
 To package this kwin-script into a .kwinscript archive, execute:
 
 ```
-zip -r quick-tile-2-v$(cat metadata.json | jq -r .KPlugin.Version).kwinscript *
+make package
 ```
 
-To install the archive, execute:
-```
-kpackagetool6 --type=KWin/Script -i .
-```
-Alternatively, open "KWin scripts" from the start menu and then "Import KWin script ..."
-Afterwards, you might need to log in and out.
+It can then be installed via "Import KWin script ..." in system settings.
