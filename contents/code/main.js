@@ -9,217 +9,208 @@
  * https://github.com/tsoernes/kwin-quick-tile-2
  ******************************************************************************/
 
-function _GetScreenGeometry() {
-    return workspace.clientArea(KWin.PlacementArea, workspace.activeScreen, workspace.Desktop)
+function _tileEvaluator() {
+  return {
+    screenGeometry: workspace.clientArea(
+      KWin.PlacementArea,
+      workspace.activeScreen,
+      workspace.currentDesktop
+    ),
+    clientGeometry: workspace.activeWindow.frameGeometry,
+    tileGeometry: workspace.activeWindow.tile?.relativeGeometry,
+
+    isVerticallyMaximized() {
+      return (this.clientGeometry.height === this.screenGeometry.height);
+    },
+    isHorizontallyMaximized() {
+      return (this.clientGeometry.height === this.screenGeometry.height);
+    },
+    isMaximized() {
+      return this.isHorizontallyMaximized() && this.isVerticallyMaximized();
+    },
+
+    isTiledTop() {
+      return this.tileGeometry != null &&
+        this.tileGeometry.x === 0 &&
+        this.tileGeometry.y === 0 &&
+        this.tileGeometry.width === 1 &&
+        this.tileGeometry.height === 0.5;
+    },
+    isTiledBottom() {
+      return this.tileGeometry != null &&
+        this.tileGeometry.x === 0 &&
+        this.tileGeometry.y === 0.5 &&
+        this.tileGeometry.width === 1 &&
+        this.tileGeometry.height === 0.5;
+    },
+    isTiledLeft() {
+      return this.tileGeometry != null &&
+        this.tileGeometry.x === 0 &&
+        this.tileGeometry.y === 0 &&
+        this.tileGeometry.width === 0.5 &&
+        this.tileGeometry.height === 1;
+    },
+    isTiledRight() {
+      return this.tileGeometry != null &&
+        this.tileGeometry.x === 0.5 &&
+        this.tileGeometry.y === 0 &&
+        this.tileGeometry.width === 0.5 &&
+        this.tileGeometry.height === 1;
+    },
+    isTiledTopLeft() {
+      return this.tileGeometry != null &&
+        this.tileGeometry.x === 0 &&
+        this.tileGeometry.y === 0 &&
+        this.tileGeometry.width === 0.5 &&
+        this.tileGeometry.height === 0.5;
+    },
+    isTiledTopRight() {
+      return this.tileGeometry != null &&
+        this.tileGeometry.x === 0.5 &&
+        this.tileGeometry.y === 0 &&
+        this.tileGeometry.width === 0.5 &&
+        this.tileGeometry.height === 0.5;
+    },
+    isTiledBottomLeft() {
+      return this.tileGeometry != null &&
+        this.tileGeometry.x === 0 &&
+        this.tileGeometry.y === 0.5 &&
+        this.tileGeometry.width === 0.5 &&
+        this.tileGeometry.height === 0.5;
+    },
+    isTiledBottomRight() {
+      return this.tileGeometry != null &&
+        this.tileGeometry.x === 0.5 &&
+        this.tileGeometry.y === 0.5 &&
+        this.tileGeometry.width === 0.5 &&
+        this.tileGeometry.height === 0.5;
+    },
+  }
 }
 
-function _GetClientGeometryOnScreen() {
-    const clientGeometry = workspace.activeClient.geometry
-    const screenGeometry = _GetScreenGeometry()
-    const x = clientGeometry.x - screenGeometry.x
-    const y = clientGeometry.y - screenGeometry.y
-    return {x: x, y: y, width: clientGeometry.width, height: clientGeometry.height}
-}
+var QuickTileUp = function () {
+  const tileEvaluator = _tileEvaluator();
 
-function _IsVerticallyMaximized() {
-    const screenGeometry = _GetScreenGeometry()
-    const clientGeometry = _GetClientGeometryOnScreen()
-    if (clientGeometry.height === screenGeometry.height) {
-        return true
-    }
-    return false
-}
-
-function _IsHorizontallyMaximized() {
-    const screenGeometry = _GetScreenGeometry()
-    const clientGeometry = _GetClientGeometryOnScreen()
-    if (clientGeometry.width === screenGeometry.width) {
-        return true
-    }
-    return false
-}
-
-function _IsMaximized() {
-    return _IsHorizontallyMaximized() && _IsVerticallyMaximized()
-}
-
-function _IsTiledToTop() {
-    const screenGeometry = _GetScreenGeometry()
-    const clientGeometry = _GetClientGeometryOnScreen()
-    if (clientGeometry.height === (screenGeometry.height / 2) && clientGeometry.y === 0) {
-        return true
-    }
-    return false
-}
-
-function _IsTiledTop() {
-    return _IsTiledToTop() && _IsHorizontallyMaximized()
-}
-
-function _IsTiledToBottom() {
-    const screenGeometry = _GetScreenGeometry()
-    const clientGeometry = _GetClientGeometryOnScreen()
-    if (clientGeometry.height === (screenGeometry.height / 2) && clientGeometry.y === (screenGeometry.height / 2)) {
-        return true
-    }
-    return false
-}
-
-function _IsTiledBottom() {
-    return _IsTiledToBottom() && _IsHorizontallyMaximized()
-}
-
-function _IsTiledToLeft() {
-    const screenGeometry = _GetScreenGeometry()
-    const clientGeometry = _GetClientGeometryOnScreen()
-    if (clientGeometry.width === (screenGeometry.width / 2) && clientGeometry.x === 0) {
-        return true
-    }
-    return false
-}
-
-function _IsTiledLeft() {
-    return _IsTiledToLeft() && _IsVerticallyMaximized()
-}
-
-function _IsTiledToRight() {
-    const screenGeometry = _GetScreenGeometry()
-    const clientGeometry = _GetClientGeometryOnScreen()
-    if (clientGeometry.width === (screenGeometry.width / 2) && clientGeometry.x === (screenGeometry.width / 2)) {
-        return true
-    }
-    return false
-}
-
-function _IsTiledRight() {
-    return _IsTiledToRight() && _IsVerticallyMaximized()
-}
-
-function _IsTiledToQuadrant() {
-    const screenGeometry = _GetScreenGeometry()
-    const clientGeometry = _GetClientGeometryOnScreen()
-    if (clientGeometry.width === (screenGeometry.width / 2) && clientGeometry.height === (screenGeometry.height/ 2)) {
-        return true
-    }
-    return false
-}
-
-function _IsTiledTopLeft() {
-    return _IsTiledToTop() && _IsTiledToLeft()
-}
-
-function _IsTiledTopRight() {
-    return _IsTiledToTop() && _IsTiledToRight()
-}
-
-function _IsTiledBottomLeft() {
-    return _IsTiledToBottom() && _IsTiledToLeft()
-}
-
-function _IsTiledBottomRight() {
-    return _IsTiledToBottom() && _IsTiledToRight()
-}
-
-var QuickTileUp = function() {
-    // L > TL
-    if (_IsTiledLeft()) {
-        workspace.slotWindowQuickTileTopLeft()
+  // L > TL
+  if (tileEvaluator.isTiledLeft()) {
+    workspace.slotWindowQuickTileTopLeft();
     // R > TR
-    } else if (_IsTiledRight()) {
-        workspace.slotWindowQuickTileTopRight()
+  } else if (tileEvaluator.isTiledRight()) {
+    workspace.slotWindowQuickTileTopRight();
     // B > T
-    } else if (_IsTiledBottom()) {
-        workspace.slotWindowQuickTileTop()
+  } else if (tileEvaluator.isTiledBottom()) {
+    workspace.slotWindowQuickTileTop();
     // BL > L
-    } else if (_IsTiledBottomLeft()) {
-        workspace.slotWindowQuickTileLeft()
+  } else if (tileEvaluator.isTiledBottomLeft()) {
+    workspace.slotWindowQuickTileLeft();
     // BR > R
-    } else if (_IsTiledBottomRight()) {
-        workspace.slotWindowQuickTileRight()
+  } else if (tileEvaluator.isTiledBottomRight()) {
+    workspace.slotWindowQuickTileRight();
     // M > T
     // this is probaly no good for multi-monitor
-    } else if (_IsMaximized()) {
-        workspace.slotWindowQuickTileTop()
-        workspace.slotWindowQuickTileTop()
-    } else {
-        workspace.slotWindowMaximize()
-    }
-}
+  } else if (tileEvaluator.isMaximized()) {
+    workspace.slotWindowMaximize();
+  } else {
+    workspace.slotWindowMaximize();
+  }
+};
 
-var QuickTileDown = function() {
-    // L > BL
-    if (_IsTiledLeft()) {
-        workspace.slotWindowQuickTileBottomLeft()
+var QuickTileDown = function () {
+  const tileEvaluator = _tileEvaluator();
+
+  // L > BL
+  if (tileEvaluator.isTiledLeft()) {
+    workspace.slotWindowQuickTileBottomLeft();
     // R > BR
-    } else if (_IsTiledRight()) {
-        workspace.slotWindowQuickTileBottomRight()
+  } else if (tileEvaluator.isTiledRight()) {
+    workspace.slotWindowQuickTileBottomRight();
     // T > B
-    } else if (_IsTiledTop()) {
-      workspace.slotWindowQuickTileBottom()
+  } else if (tileEvaluator.isTiledTop()) {
+    workspace.slotWindowQuickTileBottom();
     // TL > L
-    } else if (_IsTiledTopLeft()) {
-        workspace.slotWindowQuickTileLeft()
+  } else if (tileEvaluator.isTiledTopLeft()) {
+    workspace.slotWindowQuickTileLeft();
     // TR > R
-    } else if (_IsTiledTopRight()) {
-        workspace.slotWindowQuickTileRight()
+  } else if (tileEvaluator.isTiledTopRight()) {
+    workspace.slotWindowQuickTileRight();
     // M > B
-    } else if (_IsMaximized()) {
-        workspace.slotWindowQuickTileBottom()
-        workspace.slotWindowQuickTileBottom()
-    } else {
-        workspace.slotWindowMinimize()
-    }
-}
+  } else if (tileEvaluator.isMaximized()) {
+    workspace.slotWindowMaximize();
+  } else {
+    workspace.slotWindowMinimize();
+  }
+};
 
-var QuickTileLeft = function() {
-    // T > TL
-    if (_IsTiledTop()) {
-        workspace.slotWindowQuickTileTopLeft()
+var QuickTileLeft = function () {
+  const tileEvaluator = _tileEvaluator();
+
+  // T > TL
+  if (tileEvaluator.isTiledTop()) {
+    workspace.slotWindowQuickTileTopLeft();
     // B > BL
-    } else if (_IsTiledBottom()) {
-        workspace.slotWindowQuickTileBottomLeft()
+  } else if (tileEvaluator.isTiledBottom()) {
+    workspace.slotWindowQuickTileBottomLeft();
     // TR > T
-    } else if (_IsTiledTopRight()) {
-        workspace.slotWindowQuickTileTop()
+  } else if (tileEvaluator.isTiledTopRight()) {
+    workspace.slotWindowQuickTileTop();
     // BR > B
-    } else if (_IsTiledBottomRight()) {
-        workspace.slotWindowQuickTileBottom()
+  } else if (tileEvaluator.isTiledBottomRight()) {
+    workspace.slotWindowQuickTileBottom();
     // M > L
-    } else if (_IsMaximized()) {
-        workspace.slotWindowQuickTileLeft()
-        workspace.slotWindowQuickTileLeft()
+  } else if (tileEvaluator.isMaximized()) {
+    workspace.slotWindowQuickTileLeft();
     // R > L, BL > L, TL > L
-    } else {
-        workspace.slotWindowQuickTileLeft()
-    }
-}
+  } else {
+    workspace.slotWindowQuickTileLeft();
+  }
+};
 
-var QuickTileRight = function() {
-    // T > TR
-    if (_IsTiledTop()) {
-        workspace.slotWindowQuickTileTopRight()
+var QuickTileRight = function () {
+  const tileEvaluator = _tileEvaluator();
+
+  // T > TR
+  if (tileEvaluator.isTiledTop()) {
+    workspace.slotWindowQuickTileTopRight();
     // B > BR
-    } else if (_IsTiledBottom()) {
-        workspace.slotWindowQuickTileBottomRight()
+  } else if (tileEvaluator.isTiledBottom()) {
+    workspace.slotWindowQuickTileBottomRight();
     // TL > T
-    } else if (_IsTiledTopLeft()) {
-        workspace.slotWindowQuickTileTop()
+  } else if (tileEvaluator.isTiledTopLeft()) {
+    workspace.slotWindowQuickTileTop();
     // BL > B
-    } else if (_IsTiledBottomLeft()) {
-        workspace.slotWindowQuickTileBottom()
+  } else if (tileEvaluator.isTiledBottomLeft()) {
+    workspace.slotWindowQuickTileBottom();
     // M > R
-    } else if (_IsMaximized()) {
-        workspace.slotWindowQuickTileRight()
-        workspace.slotWindowQuickTileRight()
+  } else if (tileEvaluator.isMaximized()) {
+    workspace.slotWindowQuickTileRight();
     // L > R, BR > R, TR > R
-    } else {
-        workspace.slotWindowQuickTileRight()
-    }
-}
+  } else {
+    workspace.slotWindowQuickTileRight();
+  }
+};
 
-
-var shortcutPrefix = "Quick Tile 2 "
-registerShortcut(shortcutPrefix + "Up", shortcutPrefix + "Up", "Meta+Up", QuickTileUp)
-registerShortcut(shortcutPrefix + "Down", shortcutPrefix + "Down", "Meta+Down", QuickTileDown)
-registerShortcut(shortcutPrefix + "Left", shortcutPrefix + "Left", "Meta+Left", QuickTileLeft)
-registerShortcut(shortcutPrefix + "Right", shortcutPrefix + "Right", "Meta+Right", QuickTileRight)
+var shortcutPrefix = "Quick Tile 2 ";
+registerShortcut(
+  shortcutPrefix + "Up",
+  shortcutPrefix + "Up",
+  "Meta+Up",
+  QuickTileUp
+);
+registerShortcut(
+  shortcutPrefix + "Down",
+  shortcutPrefix + "Down",
+  "Meta+Down",
+  QuickTileDown
+);
+registerShortcut(
+  shortcutPrefix + "Left",
+  shortcutPrefix + "Left",
+  "Meta+Left",
+  QuickTileLeft
+);
+registerShortcut(
+  shortcutPrefix + "Right",
+  shortcutPrefix + "Right",
+  "Meta+Right",
+  QuickTileRight
+);
